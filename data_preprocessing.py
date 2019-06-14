@@ -6,6 +6,9 @@ import re
 import numpy as np 
 from sklearn.metrics.classification import  log_loss
 from sklearn.metrics.cluster import normalized_mutual_info_score
+import seaborn as sns
+from sklearn.metrics import confusion_matrix
+
 #%%
 zf = zipfile.ZipFile("training_variants.zip")
 
@@ -128,5 +131,15 @@ normalized_mutual_info_score(data["Class"].values,random_pro)
 
 
 #%%
+
+cm=confusion_matrix(data["Class"].values,random_pro)
+cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+
+#%%
+labels = [1,2,3,4,5,6,7,8,9]
+sns.heatmap(cm, annot=True, cmap="YlGnBu", fmt=".3f", xticklabels=labels, yticklabels=labels)
+
+#%%
+cm
 
 #%%
